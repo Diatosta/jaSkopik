@@ -327,7 +327,7 @@ class SkopikReader implements Closeable {
             if(hasExplicitIndex){
                 // Add null entries if needed
                 for(int i = (maxIndex + 1); i < index; i++){
-                    array.getEntries().add(i, null);
+                    array.getEntries().add(i, SkopikObject.Null());
                 }
             }
             else{
