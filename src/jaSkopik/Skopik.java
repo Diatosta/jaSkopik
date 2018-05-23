@@ -28,6 +28,12 @@ class Skopik {
 
     static final Character[] SuffixKeys = { 'b', 'd', 'f', 'u', 'U', 'L' };
 
+    static final Character[] ExponentialKeys = { 'e', 'E' };
+
+    static final Character NegativePrefixKey = '-';
+
+    static final Character DecimalPointKey = '.';
+
     static final String HexadecimalPrefix = "0x";
 
     static final SkopikDataType[] WordLookup = {
@@ -97,7 +103,7 @@ class Skopik {
             // Don't allow decimals/negative hexadecimal numbers
             // (negative hex numbers need to be processed at another point)
             if(!isHex){
-                if(c == '.' || c == '-'){
+                if(c == DecimalPointKey || c == NegativePrefixKey){
                     ++length;
                     continue;
                 }
@@ -108,7 +114,8 @@ class Skopik {
             }
             if((flags & CharUtils.CharacterTypeFlags.Letter.id) != 0){
                 // ABCDEF or abcdef?
-                if(isHex && ((c & ~0x67) == 0)){
+                // (adding 1 prevents 'g' and 'G' false positives
+                if(isHex && (((c + 1) & ~0x67) == 0)){
                     ++length;
                     continue;
                 }
@@ -198,8 +205,9 @@ class Skopik {
                 suffixType |= GetDataType(c);
 
                 if(suffixType == SkopikDataType.None.id){
+                    var eIdx = ((flags & CharUtils.CharacterTypeFlags.Lowercase.id) != 0) ? 0 : 1;
                     // Check for exponential float
-                    if(!isHex && ((c & ~('e' | 'E')) == 0)){
+                    if(!isHex && (c == ExponentialKeys[eIdx])){
                         if(hasExponent || (!hasDigit || (!hasDigit && !hasSeparator)))
                             throw new OperationNotSupportedException("Malformed number data: '" + value + "'");
 
@@ -208,13 +216,13 @@ class Skopik {
                 }
             }
             else{
-                if(c == '.'){
+                if(c == DecimalPointKey){
                     if(!hasDigit || hasSeparator)
                         throw new OperationNotSupportedException("Malformed number data: '" + value + "'");
 
                     hasSeparator = true;
                 }
-                else if(c == '-'){
+                else if(c == NegativePrefixKey){
                     if(hasExponent){
                         if(!hasDigit || (!hasDigit && !hasSeparator))
                             throw new OperationNotSupportedException("Malformed number data: '" + value + "'");
@@ -336,7 +344,7 @@ class Skopik {
 
     static boolean IsNegativeNumber(String value)
     {
-        return ((value.length() > 1) && (value.charAt(0) == '-'));
+        return ((value.length() > 1) && (value.charAt(0) == NegativePrefixKey));
     }
 
     static boolean IsHexadecimalNumber(String value)
