@@ -1,5 +1,6 @@
 package jaSkopik.Types;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,6 +14,17 @@ public class SkopikArray extends SkopikBlock implements ISkopikArray {
     @Override
     public int getCount() {
         return m_entries.size();
+    }
+
+    @Override
+    public void CopyTo(ArrayList array, int index) {
+        if(index >= array.size()){
+            throw new IllegalArgumentException("Index is bigger than the array size!");
+        }
+
+        for(int i = index,  j = 0; i < array.size(); i++, j++){
+            array.set(i, m_entries.get(j));
+        }
     }
 
     @Override

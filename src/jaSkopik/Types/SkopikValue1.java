@@ -14,13 +14,13 @@ public class SkopikValue1<T> extends SkopikValue implements ISkopikObject
     }
 
     @Override
-    public Object GetValue()
+    public Object getValue()
     {
-        return getValue();
+        return getPrivateValue();
     }
 
     @Override
-    public void SetValue(Object value)
+    public void setValue(Object value)
     {
         if (!SkopikFactory.IsValueType(value, getDataType()))
         {
@@ -30,6 +30,17 @@ public class SkopikValue1<T> extends SkopikValue implements ISkopikObject
         setPrivateValue(value);
     }
 
+    @Override
+    public <T> T GetValue(Class<T> defaultClass, T defaultValue) {
+        Class type = defaultClass;
+
+        if(SkopikFactory.IsValueType(type, DataType)){
+            return (T)getValue();
+        }
+
+        return defaultValue;
+    }
+
     public final Object GetData()
     {
         return getValue();
@@ -37,7 +48,7 @@ public class SkopikValue1<T> extends SkopikValue implements ISkopikObject
 
     public final void SetData(Object value)
     {
-        SetValue(value);
+        setValue(value);
     }
 
     @Override
@@ -85,20 +96,5 @@ public class SkopikValue1<T> extends SkopikValue implements ISkopikObject
     @Override
     public boolean getIsValue() {
         return false;
-    }
-
-    @Override
-    public Object getValue() {
-        return null;
-    }
-
-    @Override
-    public void setValue(Object value) {
-        if (!SkopikFactory.IsValueType(value, getDataType()))
-        {
-            throw new UnsupportedOperationException("Value does not match underlying value type.");
-        }
-
-        setPrivateValue(value);
     }
 }

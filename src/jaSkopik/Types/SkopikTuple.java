@@ -17,6 +17,17 @@ public class SkopikTuple extends SkopikBlock implements ISkopikTuple {
     }
 
     @Override
+    public void CopyTo(ArrayList array, int index) {
+        if(index >= array.size()){
+            throw new IllegalArgumentException("Index is bigger than the array size!");
+        }
+
+        for(int i = index,  j = 0; i < array.size(); i++, j++){
+            array.set(i, m_entries.get(j));
+        }
+    }
+
+    @Override
     public boolean getIsEmpty() {
         return m_entries.size() == 0;
     }

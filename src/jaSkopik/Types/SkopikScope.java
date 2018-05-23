@@ -1,6 +1,7 @@
 package jaSkopik.Types;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -14,6 +15,17 @@ public class SkopikScope extends SkopikBlock implements ISkopikScope {
     @Override
     public int getCount() {
         return m_entries.size();
+    }
+
+    @Override
+    public void CopyTo(ArrayList array, int index) {
+        if(index >= array.size()){
+            throw new IllegalArgumentException("Index is bigger than the array size!");
+        }
+
+        for(int i = index,  j = 0; i < array.size(); i++, j++){
+            array.set(i, m_entries.get(j));
+        }
     }
 
     @Override
@@ -89,7 +101,7 @@ public class SkopikScope extends SkopikBlock implements ISkopikScope {
 
     @Override
     public Iterator<ISkopikObject> iterator() {
-        return null;
+        return m_entries.values().iterator();
     }
 
     protected SkopikScope(SkopikDataType type) {

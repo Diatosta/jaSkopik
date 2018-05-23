@@ -13,22 +13,21 @@ public class SkopikTest {
 
         byte[] fileContents = null;
 
-        SkopikData skopData = null;
+        SkopikData data = null;
 
         try{
             Path path = Paths.get(filename);
             fileContents = Files.readAllBytes(path);
 
-            skopData = new SkopikData(fileContents);
+            data = SkopikData.Load(fileContents, "test.skop");
         }
         catch (Exception ex){
             System.out.println(ex);
+            ex.printStackTrace();
         }
 
-        SkopikScope data = skopData.getGlobalScope();
-
-        for(int i = 0; i < data.getCount(); i++){
-            ISkopikObject obj = data.getItem(i);
+        int i = 0;
+        for(Object obj : data){
             String className = "ERROR!!!";
 
             if(obj != null){
@@ -43,7 +42,7 @@ public class SkopikTest {
                     className = className + " : '" + obj + "'";
             }
 
-            System.out.println("[" + i + "]: " + className);
+            System.out.println("[" + i++ + "]: " + className);
         }
     }
 }
