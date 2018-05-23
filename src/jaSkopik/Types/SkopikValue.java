@@ -36,112 +36,70 @@ public abstract class SkopikValue extends SkopikObject implements ISkopikValue
         return TypeCode.Object;
     }
 
-    private <T> T ConvertTo(Function<Object, T> convertFn)
+    public final boolean ToBoolean()
     {
-        Object data = GetValue();
-
-        if (data != null)
-        {
-            return convertFn.apply(data);
-        }
-
-        return null;
+        return (boolean)GetValue();
     }
 
-    /*public final boolean ToBoolean()
+    public final byte ToByte()
     {
-        return ConvertTo(Convert.ToBoolean);
+        return (byte)GetValue();
     }
 
-    //C# TO JAVA CONVERTER WARNING: Unsigned integer types have no direct equivalent in Java:
-//ORIGINAL LINE: byte IConvertible.ToByte(IFormatProvider provider)
-    public final byte ToByte(IFormatProvider provider)
+    public final char ToChar()
     {
-        return ConvertTo(Convert.ToByte, provider);
+        return (char)GetValue();
     }
 
-    public final char ToChar(IFormatProvider provider)
+    public final int ToDecimal()
     {
-        return ConvertTo(Convert.ToChar, provider);
+        return (int)GetValue();
     }
 
-    public final LocalDateTime ToDateTime(IFormatProvider provider)
+    public final double ToDouble()
     {
-        throw new UnsupportedOperationException("Unsupported value type cast.");
+        return (double)GetValue();
     }
 
-    public final BigDecimal ToDecimal(IFormatProvider provider)
+    public final short ToInt16()
     {
-        return ConvertTo(Convert.ToDecimal, provider);
+        return (short)GetValue();
     }
 
-    public final double ToDouble(IFormatProvider provider)
+    public final int ToInt32()
     {
-        return ConvertTo(Convert.ToDouble, provider);
+        return (int)GetValue();
     }
 
-    public final short ToInt16(IFormatProvider provider)
+    public final long ToInt64()
     {
-        return ConvertTo(Convert.ToInt16, provider);
+        return (long)GetValue();
     }
 
-    public final int ToInt32(IFormatProvider provider)
+    public final byte ToSByte()
     {
-        return ConvertTo(Convert.ToInt32, provider);
+        return (byte)GetValue();
     }
 
-    public final long ToInt64(IFormatProvider provider)
+    public final float ToSingle()
     {
-        return ConvertTo(Convert.ToInt64, provider);
+        return (float)GetValue();
     }
 
-    public final byte ToSByte(IFormatProvider provider)
+    public final short ToUInt16()
     {
-        return ConvertTo(Convert.ToSByte, provider);
+        return (short)GetValue();
     }
 
-    public final float ToSingle(IFormatProvider provider)
+    public final int ToUInt32()
     {
-        return ConvertTo(Convert.ToSingle, provider);
+        return (int)GetValue();
     }
 
-    public final String toString(IFormatProvider provider)
+    public final long ToUInt64()
     {
-        return ConvertTo(String.valueOf, provider);
+        return (long)GetValue();
     }
-
-    public final Object ToType(java.lang.Class conversionType, IFormatProvider provider)
-    {
-        Object data = GetValue();
-
-        if (data instanceof IConvertible)
-        {
-            return Convert.ChangeType(data, conversionType, provider);
-        }
-
-        throw new IllegalStateException(String.format("Cannot convert object of type '%1$s' to type '%2$s'.", data.getClass().getSimpleName(), conversionType.getSimpleName()));
-    }
-
-    //C# TO JAVA CONVERTER WARNING: Unsigned integer types have no direct equivalent in Java:
-//ORIGINAL LINE: ushort IConvertible.ToUInt16(IFormatProvider provider)
-    public final short ToUInt16(IFormatProvider provider)
-    {
-        return ConvertTo(Convert.ToUInt16, provider);
-    }
-
-    //C# TO JAVA CONVERTER WARNING: Unsigned integer types have no direct equivalent in Java:
-//ORIGINAL LINE: uint IConvertible.ToUInt32(IFormatProvider provider)
-    public final int ToUInt32(IFormatProvider provider)
-    {
-        return ConvertTo(Convert.ToUInt32, provider);
-    }
-
-    //C# TO JAVA CONVERTER WARNING: Unsigned integer types have no direct equivalent in Java:
-//ORIGINAL LINE: ulong IConvertible.ToUInt64(IFormatProvider provider)
-    public final long ToUInt64(IFormatProvider provider)
-    {
-        return ConvertTo(Convert.ToUInt64, provider);
-    }*/
 
     @Override
     public String toString()
