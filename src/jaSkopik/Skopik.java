@@ -199,7 +199,7 @@ class Skopik {
 
                 if(suffixType == SkopikDataType.None.id){
                     // Check for exponential float
-                    if(!isHex && ((c & ~0x65) == 0)){
+                    if(!isHex && ((c & ~('e' | 'E')) == 0)){
                         if(hasExponent || (!hasDigit || (!hasDigit && !hasSeparator)))
                             throw new OperationNotSupportedException("Malformed number data: '" + value + "'");
 
